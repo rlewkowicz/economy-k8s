@@ -1,12 +1,12 @@
 # Preface
 
-This is a very simple, opinionated module to give you an eks cluster and associated efs store so your pvcs can cross AZ's. Note that efs is considerably slow, so if you're running a website or something of the sort, you're going to want either nginx micro caching or varnish in front of it. However you want to limit page rendering.  
+This is a very simple, opinionated module to give you an eks cluster and associated efs store so your pvcs can cross AZ's. Note that efs is considerably slow, so if you're running a website or something of the sort, you're going to want either nginx micro caching or varnish in front of it. However you want to limit page rendering. EBS works natively out of the box, so you don't have to use EFS if you don't want to. 
 
-Its a very simple and powerful architechture.
+Its a very simple and powerful architecture.
 
 ![arch](docs/arch.jpeg)
 
-I don't expose instance size and a handful of other things at this time. This will accompany a blog post, of which the goal is to provide one of the cheapest, cost stable, k8s implimentations out there. EFS is cheap, you get 12 spot instances totaling 24 cores and 24 gigs of ram for 60/mo. For just managed eks and nodes that's about 132/mo. You'll see a little creep on this with alb and efs costs, but it should be negliglble. I'd say I highly doubt this ecosystem will exceed 200/mo. Some of the fully abstracted k8's services are cheap at a first glance, but they scale rapidly with compute needs. This maintains a mostly fixed cost (I think everyone nails you on network costs, it's like pennies though for fairly massive amounts of data).
+I don't expose instance size and a handful of other things at this time. This will accompany a blog post, of which the goal is to provide one of the cheapest, cost stable, k8s implementations out there. EFS is cheap, you get 12 spot instances totaling 24 cores and 24 gigs of ram for 60/mo. For just managed eks and nodes that's about 132/mo. You'll see a little creep on this with alb and efs costs, but it should be negligible. I'd say I highly doubt this ecosystem will exceed 200/mo. Some of the fully abstracted k8's services are cheap at a first glance, but they scale rapidly with compute needs. This maintains a mostly fixed cost (I think everyone nails you on network costs, it's like pennies though for fairly massive amounts of data).
 
 I use the default public subnets, otherwise you need nat instances for private outbound and that costs money. 
 
@@ -16,7 +16,7 @@ Out of the box, it will configure and install the EFS csi driver and generate th
 
 It will also configure external DNS, again with associated iam policies and service accounts. 
 
-You also get nginx as a service which creates an assoicarted loadbalncer. External dns will key on ingress objects you create and create alias records to your load balancer. 
+You also get nginx as a service which creates an associated load balancer. External dns will key on ingress objects you create and create alias records to your load balancer. 
 
 
 <!-- BEGIN_TF_DOCS -->
